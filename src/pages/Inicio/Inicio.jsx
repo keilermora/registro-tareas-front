@@ -75,7 +75,7 @@ class Inicio extends Component {
               <th>Descripcion</th>
               <th>Vigencia</th>
               <th>Fecha Creación</th>
-              <th></th>
+              <th>Controles</th>
             </tr>
           </thead>
           <tbody>

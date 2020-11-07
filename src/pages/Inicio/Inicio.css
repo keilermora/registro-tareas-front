@@ -1,11 +1,21 @@
 .page-inicio {
-  max-width: 800px;
+  max-width: 1200px;
+  padding: 0 16px;
   margin: 0 auto;
+}
+
+.page-inicio table {
+  width: 100%;
 }
 
 .page-inicio table th,
 .page-inicio table td {
-  padding-right: 16px;
+  padding: 0 16px;
+}
+
+.page-inicio table th {
+  border: 1px solid black;
+  text-align: center;
 }
 
 .page-inicio table th:last-of-type,
