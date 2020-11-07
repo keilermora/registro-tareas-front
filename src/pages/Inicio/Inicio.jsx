@@ -23,7 +23,7 @@ class Inicio extends Component {
 
   getData() {
     this.updateCargando(true);
-    fetch("http://localhost:9000/api/tareas")
+    fetch(`${process.env.REACT_APP_API_URL}/tareas`)
       .then(res => res.json())
       .then(result => {
         this.setState({ tareas: result });
@@ -40,7 +40,7 @@ class Inicio extends Component {
   }
 
   onClickDeleteButton(event, identificador) {
-    fetch(`http://localhost:9000/api/tareas/${identificador}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/tareas/${identificador}`, {
       method: 'DELETE',
     }).then(result => {
       this.getData();

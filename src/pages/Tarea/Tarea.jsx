@@ -20,7 +20,7 @@ class Tarea extends Component {
   componentDidMount() {
     if(this.state.identificador) {
       this.updateCargando(true);
-      fetch(`http://localhost:9000/api/tareas/${this.state.identificador}`)
+      fetch(`${process.env.REACT_APP_API_URL}/tareas/${this.state.identificador}`)
         .then(res => res.json())
         .then(result => {
           this.setState({
@@ -48,7 +48,7 @@ class Tarea extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { identificador, descripcion, vigente } = this.state
-    let fetchUrl = 'http://localhost:9000/api/tareas';
+    let fetchUrl = `${process.env.REACT_APP_API_URL}/tareas`;
     let method;
 
     if(identificador) {
