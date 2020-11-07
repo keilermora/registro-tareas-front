@@ -59,7 +59,10 @@ class Inicio extends Component {
     const { error, tareas } = this.state;
 
     if (error) {
-      return <div>Ocurrió un error: {error.message}</div>;
+      return (
+        <div>
+          Ocurrió un error: {error.message}. ¿Se ha ejecutado el proyecto registro-tareas-back en su ambiente de desarrollo?
+        </div>);
     } else if(cargando) {
       return <Cargando />;
     } else {
