@@ -1,0 +1,18 @@
+.page-inicio {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-inicio table th,
+.page-inicio table td {
+  padding-right: 16px;
+}
+
+.page-inicio table th:last-of-type,
+.page-inicio table td:last-of-type {
+  padding-right: 0;
+}
+
+.page-inicio table button {
+  margin-left: 16px;
+}

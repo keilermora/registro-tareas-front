@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCargando } from '../../redux/actions';
+import './Inicio.css';
 
 class Inicio extends Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class Inicio extends Component {
       return <div>Cargando...</div>;
     } else {
       return (
-        <section>
+        <section className='page-inicio'>
         <h1>Registro de tareas</h1>
         <Link to={'tarea/0'}>
           Nueva tarea

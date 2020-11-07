@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCargando } from '../../redux/actions';
+import './Tarea.css';
 
 class Tarea extends Component {
   constructor(props) {
@@ -96,7 +97,7 @@ class Tarea extends Component {
       return <div>Cargando...</div>;
     } else {
       return (
-        <section>
+        <section className="page-tarea">
           <h1>
             {!identificador ? 'Nueva tarea' : `Editar tarea N°${identificador}`}
           </h1>
@@ -105,13 +106,19 @@ class Tarea extends Component {
           </Link>
 
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="descripcion">Descripción</label>
-            <input id="descripcion" name="descripcion" type="text" value={descripcion} onChange={this.handleInputChange} required minLength={1} maxLength={255}/>
+            <label>
+              Descripción<br/>
+              <input name="descripcion" type="text" value={descripcion} onChange={this.handleInputChange} required minLength={1} maxLength={255}/>
+            </label>
 
-            <input type="checkbox" name="vigente" id="vigente" checked={vigente} onChange={this.handleInputChange}/>
-            <label htmlFor="vigente">¿Vigente?</label>
+            <label>
+              <input type="checkbox" name="vigente" checked={vigente} onChange={this.handleInputChange}/>
+              ¿Vigente?
+            </label>
 
-            <button type="submit">Guardar</button>
+            <div>
+              <button type="submit">Guardar</button>
+            </div>
           </form>
         </section>
       );
