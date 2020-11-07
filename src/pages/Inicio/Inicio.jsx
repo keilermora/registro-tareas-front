@@ -84,7 +84,7 @@ class Inicio extends Component {
                 <td>{tarea.identificador}</td>
                 <td>{tarea.descripcion}</td>
                 <td>{tarea.vigente ? 'Si' : 'No'}</td>
-                <td>{tarea.fechaCreacion}</td>
+                <td>{tarea.fechaCreacion.substring(0, 10)}</td>
                 <td>
                   <Link to={'tarea/' + tarea.identificador}>
                     Editar
