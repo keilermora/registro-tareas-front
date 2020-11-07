@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCargando } from '../../redux/actions';
+import Cargando from '../../commons/Cargando/Cargando';
 import './Inicio.css';
 
 class Inicio extends Component {
@@ -60,7 +61,7 @@ class Inicio extends Component {
     if (error) {
       return <div>Ocurrió un error: {error.message}</div>;
     } else if(cargando) {
-      return <div>Cargando...</div>;
+      return <Cargando />;
     } else {
       return (
         <section className='page-inicio'>
