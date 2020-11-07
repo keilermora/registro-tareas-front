@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setCargando } from '../../redux/actions';
 
 class Inicio extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class Inicio extends Component {
 
     this.onClickDeleteButton = this.onClickDeleteButton.bind(this);
     this.getData = this.getData.bind(this);
+    this.updateCargando = this.updateCargando.bind(this);
   }
 
   componentDidMount() {
@@ -19,19 +22,21 @@ class Inicio extends Component {
   }
 
   getData() {
+    this.updateCargando(true);
     fetch("http://localhost:9000/api/tareas")
       .then(res => res.json())
       .then(result => {
-          this.setState({
-            cargando: false,
-            tareas: result,
-          });
-        }, error => {
-          this.setState({
-            cargando: false,
-            error: error,
-          });
-        });
+        this.setState({ tareas: result });
+      }).catch(error => {
+        this.setState({ error: error });
+      }).finally(() => {
+        this.updateCargando(false);
+      });
+  }
+
+  updateCargando(cargando) {
+    const { setCargando: setCargandoDispatch } = this.props;
+    return setCargandoDispatch(cargando);
   }
 
   onClickDeleteButton(event, identificador) {
@@ -48,7 +53,9 @@ class Inicio extends Component {
   }
 
   render() {
-    const { error, cargando, tareas } = this.state;
+    const { cargando } = this.props;
+    const { error, tareas } = this.state;
+
     if (error) {
       return <div>Ocurrió un error: {error.message}</div>;
     } else if(cargando) {
@@ -95,4 +102,12 @@ class Inicio extends Component {
   }
 }
 
-export default Inicio;
+const mapStateToProps = (state) => ({
+  cargando: state.cargando,
+});
+
+const mapDispatchToProps = {
+  setCargando: (cargando) => setCargando(cargando),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Inicio);

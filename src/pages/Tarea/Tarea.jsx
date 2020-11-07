@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setCargando } from '../../redux/actions';
 
 class Tarea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cargando: false,
       error: null,
       identificador: parseInt(this.props.match.params.identificador),
       descripcion: '',
@@ -13,25 +14,24 @@ class Tarea extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateCargando = this.updateCargando.bind(this);
   }
 
   componentDidMount() {
     if(this.state.identificador) {
-      this.setState({ cargando: true });
+      this.updateCargando(true);
       fetch(`http://localhost:9000/api/tareas/${this.state.identificador}`)
         .then(res => res.json())
         .then(result => {
-            this.setState({
-              cargando: false,
-              descripcion: result.descripcion,
-              vigente: result.vigente,
-            });
-          }, error => {
-            this.setState({
-              cargando: false,
-              error: error,
-            });
+          this.setState({
+            descripcion: result.descripcion,
+            vigente: result.vigente,
           });
+        }).catch(error => {
+          this.setState({ error: error });
+        }).finally(() => {
+          this.updateCargando(false);
+        });
     }
   }
 
@@ -58,7 +58,7 @@ class Tarea extends Component {
       method = 'POST';
     }
 
-    this.setState({ cargando: true });
+    this.updateCargando(true);
 
     fetch(fetchUrl, {
       method: method,
@@ -69,20 +69,26 @@ class Tarea extends Component {
         descripcion: descripcion,
         vigente: vigente,
       })
-    })
-      .then(res => res.json())
+    }).then(res => res.json())
       .then(result => {
-          this.props.history.push('/');
-        }, error => {
-          this.setState({
-            cargando: false,
-            error: error,
-          });
+        this.props.history.push('/');
+      }).catch(error => {
+        this.setState({
+          error: error,
         });
+      }).finally(() => {
+        this.updateCargando(false);
+      });
+  }
+
+  updateCargando(cargando) {
+    const { setCargando: setCargandoDispatch } = this.props;
+    return setCargandoDispatch(cargando);
   }
 
   render() {
-    const { error, cargando, identificador, descripcion, vigente } = this.state;
+    const { cargando } = this.props;
+    const { error, identificador, descripcion, vigente } = this.state;
 
     if(error) {
       return <div>Ocurrió un error: {error.message}</div>;
@@ -113,4 +119,12 @@ class Tarea extends Component {
   }
 }
 
-export default Tarea;
+const mapStateToProps = (state) => ({
+  cargando: state.cargando,
+});
+
+const mapDispatchToProps = {
+  setCargando: (cargando) => setCargando(cargando),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tarea);
