@@ -83,7 +83,7 @@ class Inicio extends Component {
               <tr key={tarea.identificador}>
                 <td>{tarea.identificador}</td>
                 <td>{tarea.descripcion}</td>
-                <td>{tarea.vigente}</td>
+                <td>{tarea.vigente ? 'Si' : 'No'}</td>
                 <td>{tarea.fechaCreacion}</td>
                 <td>
                   <Link to={'tarea/' + tarea.identificador}>
